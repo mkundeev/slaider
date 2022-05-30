@@ -1,72 +1,76 @@
-*{
-padding: 0;
-margin: 0;
-box-sizing: border-box;
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
-li{
-    list-style: none;
+li {
+  list-style: none;
 }
-button{
-    border: none;
-    cursor: pointer;
+button {
+  border: none;
+  cursor: pointer;
 }
-img{
-    display: block;
-    max-width: 100%;
-    height: auto;
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
 }
-.container{
-    width: 1000px;
-    margin: 0 auto;
-    padding-left: 15px;
-    padding-right: 15px;
+.container {
+  width: 1000px;
+  margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 15px;
 }
-#slider{
-    position: relative;
-    border: 1px solid red;
+#slider {
+  position: relative;
+  border: 1px solid red;
 }
-.arrow-prev, .arrow-next{
-    position: absolute;
-   
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 50px; 
-    background-color: transparent;
-    color: #fff;
+.arrow-prev,
+.arrow-next {
+  position: absolute;
+
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 50px;
+  background-color: transparent;
+  color: #fff;
 }
-.arrow-next{
-    right: 0;
+.arrow-next {
+  right: 0;
 }
-.dots-list{
-    position: absolute;
-    bottom: -50px;
-    display: flex;
-    gap: 20px;
-    transform: translateX(-50%);
-    left: 50%;
+.dots-list {
+  position: absolute;
+  bottom: -50px;
+  gap: 20px;
+  transform: translateX(-50%);
+  left: 50%;
 }
-.btn-dot{
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    background-color: rgb(232, 225, 225);
+.btn-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgb(232, 225, 225);
+  display: inline-block;
 }
-.btn-dot.is-active{
-    background-color: gray;
+.dots-list li {
+  display: inline-block;
 }
-.slider-image-title{
-    color: white;
-    position: absolute;
-    bottom: 10px;
-    transform: translateX(-50%);
-    left: 50%;
+.btn-dot.is-active {
+  background-color: gray;
 }
-.box-info{
-position: absolute;
-top: 10px;
-left:20px;
-color: white;
+.slider-image-title {
+  color: white;
+  position: absolute;
+  bottom: 10px;
+  transform: translateX(-50%);
+  left: 50%;
 }
-.slider-title{
-    margin-bottom: 10px;
+.box-info {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  color: white;
+}
+.slider-title {
+  margin-bottom: 10px;
 }
