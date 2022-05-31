@@ -34,7 +34,21 @@ class Slider {
       this.addPags();
     }
   }
- 
+ onClickBtn = e => {
+    console.log(this)
+    const element = e.target;
+    console.dir(element.classList.contains("arrow-prev"));
+    if (element.classList.contains("arrow-prev")) {
+      this.index -= 1;
+      this.indexCheck()
+      this.changeSlide()
+    }
+    if (element.classList.contains("arrow-next")) {
+      this.index += 1;
+      this.indexCheck()
+      this.changeSlide()
+    }
+  }
   addNavs() {
     this.parentEl.querySelector(".button-list").hidden = false;
     this.parentEl.addEventListener("click", this.onClickBtn);
@@ -43,20 +57,40 @@ class Slider {
     console.log(12345);
     this.parentEl.querySelector(".dots-list").hidden = false;
   }
-  onClickBtn(e) {
-    const element = e.target;
-    console.dir(element.classList.contains("arrow-prev"));
-    if (element.classList.contains("arrow-prev")) {
-      this.index -= 1;
-    }
-    if (element.classList.contains("arrow-next")) {
-      this.index += 1;
-    }
+
+
+  changeSlide() {
+  
+    const quarentImage = this.parentEl.querySelector('.slider-image');
+    const imageDescription = this.parentEl.querySelector('.slider-image-title')
+    const { img, text } =  this.slides[this.index]
+    quarentImage.src = img;
+    quarentImage.alt = text;
+    imageDescription.textContent = text;
   }
+  indexCheck() {
+    if (this.loop) {
+      if (this.index > this.slides.length - 1) {
+        this.index = 0;
+      } else if (this.index < 0) {
+        this.index = this.slides.length - 1;
+      }
+    } else {
+      if (this.index > this.slides.length - 1) {
+        this.index = this.slides.length - 1
+      }else if (this.index < 0) {
+        this.index = 0;
+      }
+    }
+    
+  }
+
+
+  
 }
 
 const slider = new Slider(slides, "#slider", {
-  loop: true,
+  loop: false,
   navs: true,
   pags: true,
   auto: true,
