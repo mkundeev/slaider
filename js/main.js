@@ -24,6 +24,7 @@ class Slider {
     this.pags = pags;
     this.auto = auto;
     this.delay = delay;
+    this.index = 0;
   }
   init() {
     if (this.navs) {
@@ -33,12 +34,24 @@ class Slider {
       this.addPags();
     }
   }
+ 
   addNavs() {
     this.parentEl.querySelector(".button-list").hidden = false;
+    this.parentEl.addEventListener("click", this.onClickBtn);
   }
   addPags() {
     console.log(12345);
     this.parentEl.querySelector(".dots-list").hidden = false;
+  }
+  onClickBtn(e) {
+    const element = e.target;
+    console.dir(element.classList.contains("arrow-prev"));
+    if (element.classList.contains("arrow-prev")) {
+      this.index -= 1;
+    }
+    if (element.classList.contains("arrow-next")) {
+      this.index += 1;
+    }
   }
 }
 
