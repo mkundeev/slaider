@@ -41,7 +41,7 @@ img {
 .dots-list {
   position: absolute;
   bottom: -50px;
-  gap: 20px;
+  /* gap: 20px; */
   transform: translateX(-50%);
   left: 50%;
 }
@@ -54,6 +54,10 @@ img {
 }
 .dots-list li {
   display: inline-block;
+}
+.dots-list li:not(:last-child){
+    margin-right: 15px;
+
 }
 .btn-dot.is-active {
   background-color: gray;

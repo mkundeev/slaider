@@ -16,7 +16,7 @@
 import { slides } from "./data.js";
 
 class Slider {
-  constructor(slides, select, { loop, navs, pags, auto, delay }) {
+  constructor(slides, select, { loop, navs, pags, auto, delay = 5000 }) {
     this.slides = slides;
     this.parentEl = document.querySelector(select);
     this.loop = loop;
@@ -32,21 +32,37 @@ class Slider {
     }
     if (this.pags) {
       this.addPags();
+      this.parentEl.addEventListener("click", this.onClickDots.bind(this));
     }
+    if (this.auto) {
+      this.onTimeChange();
+    }
+    this.counter();
   }
- onClickBtn = e => {
-    console.log(this)
+  onClickBtn = (e) => {
     const element = e.target;
-    console.dir(element.classList.contains("arrow-prev"));
     if (element.classList.contains("arrow-prev")) {
       this.index -= 1;
-      this.indexCheck()
-      this.changeSlide()
+      this.indexCheck();
+      this.changeSlide();
+      this.updateIsActiveDots();
+      this.counter();
     }
     if (element.classList.contains("arrow-next")) {
       this.index += 1;
-      this.indexCheck()
-      this.changeSlide()
+      this.indexCheck();
+      this.changeSlide();
+      this.updateIsActiveDots();
+      this.counter();
+    }
+  };
+  onClickDots(event) {
+    if (event.target.classList.contains("btn-dot")) {
+      this.index = Number(event.target.dataset.index);
+      this.indexCheck();
+      this.changeSlide();
+      this.updateIsActiveDots();
+      this.counter();
     }
   }
   addNavs() {
@@ -54,16 +70,36 @@ class Slider {
     this.parentEl.addEventListener("click", this.onClickBtn);
   }
   addPags() {
-    console.log(12345);
-    this.parentEl.querySelector(".dots-list").hidden = false;
+    const markup = `
+    <ul class="dots-list">
+    ${this.slides
+      .map(
+        (el, index) =>
+          `<li>
+        <button type="button" data-index="${index}" class="btn-dot ${
+            index === this.index ? "is-active" : ""
+          }"></button>
+      </li>`
+      )
+      .join("")}
+    </ul>`;
+    this.parentEl.insertAdjacentHTML("beforeend", markup);
   }
-
-
+  updateIsActiveDots() {
+    const test = this.parentEl.lastChild.querySelectorAll("button");
+    test.forEach((element, index) => {
+      if (element.classList.contains("is-active")) {
+        element.classList.remove("is-active");
+      }
+      if (this.index === index) {
+        element.classList.add("is-active");
+      }
+    });
+  }
   changeSlide() {
-  
-    const quarentImage = this.parentEl.querySelector('.slider-image');
-    const imageDescription = this.parentEl.querySelector('.slider-image-title')
-    const { img, text } =  this.slides[this.index]
+    const quarentImage = this.parentEl.querySelector(".slider-image");
+    const imageDescription = this.parentEl.querySelector(".slider-image-title");
+    const { img, text } = this.slides[this.index];
     quarentImage.src = img;
     quarentImage.alt = text;
     imageDescription.textContent = text;
@@ -77,24 +113,34 @@ class Slider {
       }
     } else {
       if (this.index > this.slides.length - 1) {
-        this.index = this.slides.length - 1
-      }else if (this.index < 0) {
+        this.index = this.slides.length - 1;
+      } else if (this.index < 0) {
         this.index = 0;
       }
     }
-    
   }
-
-
-  
+  counter() {
+    this.parentEl.querySelector(".slider-index").textContent = this.index + 1;
+    this.parentEl.querySelector(".number-of-slides").textContent =
+      this.slides.length;
+  }
+  onTimeChange() {
+    setInterval(() => {
+      this.index += 1
+      this.indexCheck();
+      this.changeSlide();
+      this.updateIsActiveDots();
+      this.counter();
+    }, this.delay);
+  }
 }
 
 const slider = new Slider(slides, "#slider", {
-  loop: false,
+  loop: true,
   navs: true,
   pags: true,
-  auto: true,
-  delay: 3,
+  auto: false,
+  delay: 5000,
 });
 
 slider.init();
